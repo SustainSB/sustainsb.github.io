@@ -1,2 +1,2 @@
 # sustainsb.github.io
-website for SustainSB
+scientific data-driven website and calculation repo for SustainSB
