@@ -5,7 +5,7 @@ scientific data-driven website and calculation repo for SustainSB
 Example of **Ocean Health Index** (OHI):
 
 - public website: [OceanHealthIndex.org](http://www.oceanhealthindex.org/)
-- science website: [ohi-science.org](http://ohi-science.org/)
+- science website: [OHI-science.org](http://ohi-science.org/)
 - presentation: [Reproducible Science with the Ocean Health Index](http://benbestphd.com/talks/2014-06_OHI-repro-sci) (2014)
     - Example Gulf of Guayaqil [website](http://ohi-science.org/gye) & [files](https://github.com/ohi-science/gye)
 - app: [Global OHI Explorer App](http://ecoquants.com/app/ohi) (2016)
