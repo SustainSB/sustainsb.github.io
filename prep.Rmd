@@ -1,0 +1,146 @@
+---
+title: "prep"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+### Regions
+
+Borrowed from [benbestphd.com/landscape-ecology-labs/](http://benbestphd.com/landscape-ecology-labs/) since original downloads not working at [County of Santa Barbara GIS Spatial Catalog](http://cosb.countyofsb.org/central.aspx?id=2802&terms=gis%20data).
+
+Others:
+
+- [Data Catalog -](http://cosb.countyofsb.org/itd/default.aspx?id=2802&terms=download+data/)
+
+- [Santa Barbara County Planning and Development - Maps and Imagery - GIS Data](http://sbcountyplanning.org/forms/maps/index.cfm?id=GIS)
+
+- [Box | Simple Online Collaboration: Online File Storage, FTP Replacement, Team Workspaces](https://cosantabarbara.app.box.com/s/jdt95fy7gst3g8649l9t3ukrorr5xeh9)
+
+
+### Technical
+
+- [Leaflet for R - Choropleths](https://rstudio.github.io/leaflet/choropleths.html)
+
+## Create Regions
+
+Create regions from city boundaries and county.
+
+```{r prep, message=F}
+library(tidyverse)
+library(sf)
+library(sp)
+library(rgeos)
+library(maptools)
+library(geojsonio)
+library(leaflet)
+
+regions_json = 'regions.geojson'
+cities_shp   = 'data/admin/city_boundary_no_ocean.shp'
+county_shp   = 'data/admin/county_bnd.shp'
+
+if (!file.exists(regions_json)){
+  
+  # read shapefiles
+  cities = read_sf(cities_shp) %>% as('Spatial')
+  county = read_sf(county_shp) %>% as('Spatial')
+  
+  # subtract cities from county
+  not_cities = county %>%
+    gDifference(cities) %>%
+    SpatialPolygonsDataFrame(data.frame(city='Outside Cities')) %>% 
+    spChFIDs('ID9')
+
+  # fix cities for binding
+  cities@data$city = cities@data$CITY
+  cities@data = subset(cities@data, select=city)
+  row.names(cities@data) = row.names(cities)
+  
+  # regions: bind cities and not cities
+  regions = spRbind(cities, not_cities)
+  
+  # add region id
+  regions@data$region_id = 1:9
+  
+  # write regions to geosjon
+  geojson_write(regions, file=regions_json, convert_wgs84=T)
+}
+```
+
+## Map of Regions
+
+Map regions.
+
+```{r map}
+# read regions from geojson file
+regions = geojson_read(regions_json, what='sp')
+
+# setup color palette and labels
+pal = colorNumeric('Spectral', regions$region_id, reverse=F)
+labels <- sprintf(
+  "%d: <strong>%s</strong><br/>",
+  regions$region_id, regions$city) %>% 
+  lapply(htmltools::HTML)
+
+# show interactive map
+leaflet(regions) %>%
+  # http://leaflet-extras.github.io/leaflet-providers/preview/
+  addProviderTiles(providers$Stamen.TonerLite) %>% 
+  addPolygons(
+    fillColor = ~pal(region_id),
+    fillOpacity = 0.5,
+    color = ~pal(region_id),
+    opacity = 0.7,
+    weight = 2,
+    highlight = highlightOptions(
+      fillOpacity = 0.7,
+      weight = 5,
+      opacity = 0.9,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto"))
+```
+
+
+## Table of Regions
+
+Show table of regions.
+
+```{r}
+library(DT)
+
+regions@data %>% datatable()
+
+```
+
+## Alternative Regions
+
+This [Detailed County Map (3´ x 4´)](http://sbcountyplanning.org/pdf/maps/BaseMaps/County%20Base%20for%203'x4'_updated_2016_12_22_150dpi.pdf) from [Santa Barbara County Planning and Development - Maps and Imagery - Recently Added or Updated](http://sbcountyplanning.org/forms/maps/index.cfm?id=new) has some interesting political / administrative criteria for considering alternative regions:
+
+- Areas:
+    - Incorporated City
+    - Unincorporated Urban Area
+    - Rural Area
+    - Inner-Rural Area
+    - Existing Developed Rural Neighborhood (EDRN)
+- Ownership:
+    - County of Santa Barbara
+    - State of California
+    - University of California Regents
+    - Federal ownership within Los Padres National Forest
+    - Federal ownership within Vandenberg Air Force Base
+    - Other Federal Ownership (BLM, Bureau of Reclamation, etc.)
+
+[![](images/County Base for 3'x4'_updated_2016_12_22_150dpi.png)](http://sbcountyplanning.org/pdf/maps/BaseMaps/County%20Base%20for%203'x4'_updated_2016_12_22_150dpi.pdf)
+
