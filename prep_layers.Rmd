@@ -97,11 +97,16 @@ if (!file.exists(gw_data_csv)){
     write_csv(gw_data_csv)      # 24.3 MB
 }
 
-# look at first 100 rows
-read_csv(gw_data_csv) %>%
+# read in groundwater data and look at first 100 rows
+gw_data = read_csv(gw_data_csv)
+gw_data %>%
   head(100) %>%
   datatable()
 ```
+
+The rows above are just the first `100` rows from all the station data having `r nrow(gw_data) %>% comma()` rows total. Here's the locations of all the stations as clustered markers:
+
+<script src="https://embed.github.com/view/geojson/SustainSB/sustainsb.github.io/master/data/waterservices.usgs.gov/usgs_stations.geojson?height=420&width=620"></script>
 
 
 ## Extract Data to Regions

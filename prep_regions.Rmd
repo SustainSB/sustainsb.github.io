@@ -13,13 +13,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Background
-
-### Regions
+## Download Data
 
 Borrowed from [benbestphd.com/landscape-ecology-labs/](http://benbestphd.com/landscape-ecology-labs/) since original downloads not working at [County of Santa Barbara GIS Spatial Catalog](http://cosb.countyofsb.org/central.aspx?id=2802&terms=gis%20data):
 
-- [`data/cosb.countyofsb.org/`]():
+- [`data/cosb.countyofsb.org/`](https://github.com/SustainSB/sustainsb.github.io/tree/master/data/cosb.countyofsb.org):
     - `city_boundary_no_ocean.shp`
     - `county_bnd.shp`
 
@@ -63,14 +61,28 @@ if (!file.exists(regions_json)){
   # add region id
   regions@data$region_id = 1:9
   
+  # calculate area
+  sqft_to_acres = 1/43560
+  regions@data$area_acres = gArea(regions, byid=T) * sqft_to_acres
+  
+  # write layer
+  write_csv(regions@data, 'layers/regions.csv')
+  
   # write regions to geosjon
   geojson_write(regions, file=regions_json, convert_wgs84=T)
 }
 ```
 
+Created:
+
+- [`layers/regions.csv`](https://github.com/SustainSB/sustainsb.github.io/blob/master/layers/regions.csv)
+- [`data/regions.geojson`](https://github.com/SustainSB/sustainsb.github.io/blob/master/data/regions.geojson)
+
+<script src="https://embed.github.com/view/geojson/SustainSB/sustainsb.github.io/master/data/regions.geojson?height=420&width=620"></script>
+
 ## Map of Regions
 
-Let's show a map of the regions:
+Let's show a prettier map of the regions:
 
 ```{r map}
 # read regions from geojson file
@@ -104,7 +116,6 @@ leaflet(regions) %>%
       textsize = "15px",
       direction = "auto"))
 ```
-
 
 ## Table of Regions
 
