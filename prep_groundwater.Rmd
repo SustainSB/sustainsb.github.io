@@ -108,30 +108,30 @@ read_csv(gw_data_csv) %>%
 
 ```{r}
 
-if (!file.exists(gw_data_csv)){
+if (!file.exists(gw_layer_csv)){
 
-# read in data
-d = read_csv(gw_data_csv) %>%
-  # summarize by site and year
-  group_by(region_id, city, site_no, year) %>%
-  summarize(
-    lev = mean(lev_va)) %>%
-  # summarize across sites by year
-  group_by(region_id, city, site_no) %>%
-  mutate(
-    year_n   = n(),
-    year_beg = min(year),
-    year_end = max(year),
-    gw_score = rescale(lev)*100) %>%  # rescale 0 to 100
-  filter(
-    year_n   >= 5,                    # at least 5 years of data
-    year_end == year(now())) %>%      # last year is this year
-  ungroup() %>%
-  group_by(region_id, city, year) %>%
-  summarize(
-    gw_score = mean(gw_score))        # average score across sites
-
-write_csv(d, gw_layer_csv)
+  # read in data
+  d = read_csv(gw_data_csv) %>%
+    # summarize by site and year
+    group_by(region_id, city, site_no, year) %>%
+    summarize(
+      lev = mean(lev_va)) %>%
+    # summarize across sites by year
+    group_by(region_id, city, site_no) %>%
+    mutate(
+      year_n   = n(),
+      year_beg = min(year),
+      year_end = max(year),
+      gw_score = rescale(1/lev)*100) %>%  # rescale inverse of ft below surface, 0 to 100
+    filter(
+      year_n   >= 5,                     # ensure at least 5 years of data
+      year_end == year(now())) %>%       # ensure has data for 2017
+    ungroup() %>%
+    group_by(region_id, city, year) %>%
+    summarize(
+      gw_score = mean(gw_score))        # average score across sites
+  
+  write_csv(d, gw_layer_csv)
 }
 
 read_csv(gw_layer_csv) %>%
@@ -171,8 +171,8 @@ regions@data = regions@data %>%
 # setup color palette and labels
 pal = colorNumeric('Spectral', regions$gw_score, reverse=F)
 labels <- sprintf(
-  "<strong>%s</strong> (%d)<br/>groundwater: %g",
-  regions$city, regions$region_id, regions$gw_score) %>% 
+  "<strong>%s</strong><br/>groundwater score: %g",
+  regions$city, regions$gw_score) %>% 
   lapply(htmltools::HTML)
 
 # show interactive map

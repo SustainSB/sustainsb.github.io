@@ -17,7 +17,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Regions
 
-Borrowed from [benbestphd.com/landscape-ecology-labs/](http://benbestphd.com/landscape-ecology-labs/) since original downloads not working at [County of Santa Barbara GIS Spatial Catalog](http://cosb.countyofsb.org/central.aspx?id=2802&terms=gis%20data).
+Borrowed from [benbestphd.com/landscape-ecology-labs/](http://benbestphd.com/landscape-ecology-labs/) since original downloads not working at [County of Santa Barbara GIS Spatial Catalog](http://cosb.countyofsb.org/central.aspx?id=2802&terms=gis%20data):
+
+- [`data/cosb.countyofsb.org/`]():
+    - `city_boundary_no_ocean.shp`
+    - `county_bnd.shp`
 
 ## Create Regions
 
@@ -131,5 +135,5 @@ This [Detailed County Map (3´ x 4´)](http://sbcountyplanning.org/pdf/maps/Base
     - Federal ownership within Vandenberg Air Force Base
     - Other Federal Ownership (BLM, Bureau of Reclamation, etc.)
 
-[![](images/County Base for 3'x4'_updated_2016_12_22_150dpi.png)](http://sbcountyplanning.org/pdf/maps/BaseMaps/County%20Base%20for%203'x4'_updated_2016_12_22_150dpi.pdf)
+[![](data/sbcountyplanning.org/County Base for 3'x4'_updated_2016_12_22_150dpi.png)](http://sbcountyplanning.org/pdf/maps/BaseMaps/County%20Base%20for%203'x4'_updated_2016_12_22_150dpi.pdf)
 
