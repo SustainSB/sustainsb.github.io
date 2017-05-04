@@ -18,3 +18,5 @@ Demo for **SustainSB**:
 - [prep_regions](https://sustainsb.github.io/prep_regions.html)
 - [prep_layers](https://sustainsb.github.io/prep_layers.html)
 - [calc_scores](https://sustainsb.github.io/calc_scores.html)
+
+Please feel free to direct questions or suggestions to Ben Best <ben@ecoquants.com>.
