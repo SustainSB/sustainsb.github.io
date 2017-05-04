@@ -1,5 +1,7 @@
 ---
-title: "prep"
+title: "Prep Regions"
+author: "Ben Best"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   html_document:
     toc: true
@@ -17,22 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Borrowed from [benbestphd.com/landscape-ecology-labs/](http://benbestphd.com/landscape-ecology-labs/) since original downloads not working at [County of Santa Barbara GIS Spatial Catalog](http://cosb.countyofsb.org/central.aspx?id=2802&terms=gis%20data).
 
-Others:
-
-- [Data Catalog -](http://cosb.countyofsb.org/itd/default.aspx?id=2802&terms=download+data/)
-
-- [Santa Barbara County Planning and Development - Maps and Imagery - GIS Data](http://sbcountyplanning.org/forms/maps/index.cfm?id=GIS)
-
-- [Box | Simple Online Collaboration: Online File Storage, FTP Replacement, Team Workspaces](https://cosantabarbara.app.box.com/s/jdt95fy7gst3g8649l9t3ukrorr5xeh9)
-
-
-### Technical
-
-- [Leaflet for R - Choropleths](https://rstudio.github.io/leaflet/choropleths.html)
-
 ## Create Regions
 
-Create regions from city boundaries and county.
+Create regions from city boundaries and the county remainder (ie `city`="Outside Cities"). The spatial file will be output to  [`data/regions.geojson`](https://github.com/SustainSB/sustainsb.github.io/blob/master/regions.geojson).
 
 ```{r prep, message=F}
 library(tidyverse)
@@ -43,9 +32,9 @@ library(maptools)
 library(geojsonio)
 library(leaflet)
 
-regions_json = 'regions.geojson'
-cities_shp   = 'data/admin/city_boundary_no_ocean.shp'
-county_shp   = 'data/admin/county_bnd.shp'
+regions_json = 'data/regions.geojson'
+cities_shp   = 'data/cosb.countyofsb.org/city_boundary_no_ocean.shp'
+county_shp   = 'data/cosb.countyofsb.org/county_bnd.shp'
 
 if (!file.exists(regions_json)){
   
@@ -77,7 +66,7 @@ if (!file.exists(regions_json)){
 
 ## Map of Regions
 
-Map regions.
+Let's show a map of the regions:
 
 ```{r map}
 # read regions from geojson file

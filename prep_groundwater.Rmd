@@ -1,0 +1,200 @@
+---
+title: "Prep Groundwater Data Layer"
+author: "Ben Best"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Download Data
+
+Download groundwater data from USGS using:
+
+- [USGS-R/dataRetrieval](https://github.com/USGS-R/dataRetrieval): This R package is designed to obtain USGS or EPA water quality sample data, streamflow data, and metadata directly from web services
+
+```{r setup & download, include=F}
+knitr::opts_chunk$set(echo = TRUE, message = F, warning=F)
+```
+
+```{r download}
+library(tidyverse)
+library(sp)
+library(geojsonio)
+library(dataRetrieval) # USGS-R
+library(lubridate) 
+library(stringr) 
+library(scales)
+library(dygraphs)
+library(xts)
+library(DT)
+library(leaflet)
+
+regions_json = 'data/regions.geojson'
+gw_data_csv  = 'data/waterservices.usgs.gov/usgs_groundwater_data.csv'
+gw_layer_csv = 'layers/groundwater_scores.csv'
+
+if (!file.exists(gw_data_csv)){
+  # read regions from geojson file
+  regions = geojson_read(regions_json, what='sp')
+  
+  # get sites in bounding box of regions having groundwater data
+  bb = bbox(regions) %>% as.vector() %>% round(digits=7)
+  sites <- whatNWISsites(bBox=bb) %>% as_tibble()
+  
+  # get points from sites
+  pts = sites
+  coordinates(pts)= ~ dec_long_va + dec_lat_va
+  proj4string(pts) = proj4string(regions) 
+  
+  # find region for sites
+  site_rgn = over(pts, regions)
+  
+  # filter points and save
+  pts@data = pts@data %>%
+    cbind(site_rgn)
+  pts = subset(pts, !is.na(region_id))
+  geojson_write(pts, file='data/usgs_stations.geojson')
+  
+  # join overlapping region to sites
+  sites = sites %>%
+    cbind(site_rgn)  %>% 
+    as_tibble() %>%
+    filter(!is.na(region_id)) %>%
+    mutate(
+      site_no = as.double(site_no))
+  
+  # get site data, paging through readNWISgwl() results which are limited by 2K characters in URL
+  i_seq = c(seq(1, nrow(sites), by=100), nrow(sites))
+  for (i in 1:(length(i_seq)-1)){ # i=2
+    i_beg = i_seq[i]
+    i_end = i_seq[i+1]-1
+    cat(sprintf('%02d: %d - %d\n', i, i_beg, i_end))
+    d_i = readNWISgwl(sites$site_no[i_beg:i_end], convertType=F)
+    if (i == 1){
+      d = d_i
+    } else {
+      d = bind_rows(d, d_i)
+    }
+  }
+  
+  # add year, join sites, filter NAs, write to csv
+  d %>% 
+    as_tibble() %>%
+    mutate(
+      site_no = as.double(site_no),
+      year = as.integer(str_sub(lev_dt, 1, 4)),
+      lev_va = as.double(lev_va)) %>%
+    left_join(
+      sites, by=c('site_no','agency_cd','site_tp_cd')) %>%
+    filter(!is.na(lev_va)) %>%  # 170,730 rows of data: region_id, site_no, year, lev_dt, lev_va
+    write_csv(gw_data_csv)      # 24.3 MB
+}
+
+# look at first 100 rows
+read_csv(gw_data_csv) %>%
+  head(100) %>%
+  datatable()
+```
+
+
+## Extract Data to Regions
+
+```{r}
+
+if (!file.exists(gw_data_csv)){
+
+# read in data
+d = read_csv(gw_data_csv) %>%
+  # summarize by site and year
+  group_by(region_id, city, site_no, year) %>%
+  summarize(
+    lev = mean(lev_va)) %>%
+  # summarize across sites by year
+  group_by(region_id, city, site_no) %>%
+  mutate(
+    year_n   = n(),
+    year_beg = min(year),
+    year_end = max(year),
+    gw_score = rescale(lev)*100) %>%  # rescale 0 to 100
+  filter(
+    year_n   >= 5,                    # at least 5 years of data
+    year_end == year(now())) %>%      # last year is this year
+  ungroup() %>%
+  group_by(region_id, city, year) %>%
+  summarize(
+    gw_score = mean(gw_score))        # average score across sites
+
+write_csv(d, gw_layer_csv)
+}
+
+read_csv(gw_layer_csv) %>%
+  datatable()
+```
+
+## Plot Regional Groundwater Scores over Time
+
+```{r}
+gw = read_csv(gw_layer_csv)
+
+gw_w = gw %>%
+  select(-region_id) %>%
+  spread(city, gw_score)
+
+gw_w %>%
+  select(-year) %>%
+  as.xts(., order.by=ymd(sprintf('%d-01-01', gw_w$year))) %>%
+  dygraph(main = "Deaths from Lung Disease (UK)") %>%
+  dyOptions(
+    strokeWidth = 2,
+    colors = RColorBrewer::brewer.pal(ncol(gw_w)-1, 'Spectral'))
+```
+
+## Plot Map of Current Groundwater Scores
+
+```{r}
+# read regions from geojson and join to latest groundwater scores
+regions = geojson_read(regions_json, what='sp')
+
+regions@data = regions@data %>%
+  left_join(
+    read_csv(gw_layer_csv) %>%
+      filter(year==year(now())), 
+    by=c('city','region_id'))
+
+# setup color palette and labels
+pal = colorNumeric('Spectral', regions$gw_score, reverse=F)
+labels <- sprintf(
+  "<strong>%s</strong> (%d)<br/>groundwater: %g",
+  regions$city, regions$region_id, regions$gw_score) %>% 
+  lapply(htmltools::HTML)
+
+# show interactive map
+leaflet(regions) %>%
+  # http://leaflet-extras.github.io/leaflet-providers/preview/
+  addProviderTiles(providers$Stamen.TonerLite) %>% 
+  addPolygons(
+    fillColor = ~pal(gw_score),
+    fillOpacity = 0.5,
+    color = ~pal(gw_score),
+    opacity = 0.7,
+    weight = 2,
+    highlight = highlightOptions(
+      fillOpacity = 0.7,
+      weight = 5,
+      opacity = 0.9,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto")) %>% 
+  addLegend(pal = pal, values = ~gw_score, opacity = 0.7, title = 'groundwater score',
+  position = "topleft")
+```
