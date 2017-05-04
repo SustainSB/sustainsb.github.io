@@ -1,0 +1,162 @@
+---
+title: "Prep Groundwater Data Layer"
+author: "Ben Best"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+```
+
+## SDG11 Targets
+
+For now, we're going to fake it and generate random values using United Nations Sustainable Development Goals (SDG), aka "Transforming our world: the 2030 Agenda for Sustainable Development", based on [**SDG11: Sustainable Cities and Communities**](https://sustainabledevelopment.un.org/sdg11#targets).
+
+"Sustainable development has been defined as development that meets the needs of the present without compromising the ability of future generations to meet their own needs."
+
+Focus areas from [Transforming our world: the 2030 Agenda for Sustainable Development .:. Sustainable Development Knowledge Platform](https://sustainabledevelopment.un.org/post2015/transformingourworld)): People, Planet, Prosperity, Peace, Partnership.
+
+### Outcome Targets
+
+- 11.1 **Housing**
+
+    By 2030, ensure access for all to adequate, safe and affordable housing and basic services and upgrade slums
+
+    - 11.1.1 Proportion of urban population living in slums, informal settlements or inadequate housing
+
+- 11.2 **Transportation**
+
+    By 2030, provide access to safe, affordable, accessible and sustainable transport systems for all, improving road safety, notably by expanding public transport, with special attention to the needs of those in vulnerable situations, women, children, persons with disabilities and older persons 
+
+    - 11.2.1 Proportion of population that has convenient access to public transport, by sex, age and persons with disabilities
+
+- 11.3 **Growth**
+
+    By 2030, enhance inclusive and sustainable urbanization and capacity for participatory, integrated and sustainable human settlement planning and management in all countries 
+
+    - 11.3.1 Ratio of land consumption rate to population growth rate
+    
+    - 11.3.2 Proportion of cities with a direct participation structure of civil society in urban planning and management that operate regularly and democratically
+    
+- 11.4 **Culture**
+
+    Strengthen efforts to protect and safeguard the world’s cultural and natural heritage
+
+    - 11.4.1 Total expenditure (public and private) per capita spent on the preservation, protection and conservation of all cultural and natural heritage, by type of heritage (cultural, natural, mixed and World Heritage Centre designation), level of government (national, regional and local/municipal), type of expenditure (operating expenditure/investment) and type of private funding (donations in kind, private non-profit sector and sponsorship)
+    
+- 11.5 **Resilience**
+
+    By 2030, significantly reduce the number of deaths and the number of people affected and substantially decrease the direct economic losses relative to global gross domestic product caused by disasters, including water-related disasters, with a focus on protecting the poor and people in vulnerable situations
+
+    - 11.5.1 Number of deaths, missing persons and persons affected by disaster per 100,000 peoplea
+
+    - 11.5.2 Direct disaster economic loss in relation to global GDP, including disaster damage to critical infrastructure and disruption of basic services
+    
+- 11.6 **Environment**
+
+    By 2030, reduce the adverse per capita environmental impact of cities, including by paying special attention to air quality and municipal and other waste management
+
+    - 11.6.1 Proportion of urban solid waste regularly collected and with adequate final discharge out of total urban solid waste generated, by cities
+
+    - 11.6.2 Annual mean levels of fine particulate matter (e.g. PM2.5 and PM10) in cities (population weighted)
+
+- 11.7 **Green Space**
+
+    By 2030, provide universal access to safe, inclusive and accessible, green and public spaces, in particular for women and children, older persons and persons with disabilities 
+
+    - 11.7.1 Average share of the built-up area of cities that is open space for public use for all, by sex, age and persons with disabilities
+
+    - 11.7.2 Proportion of persons victim of physical or sexual harassment, by sex, age, disability status and place of occurrence, in the previous 12 months
+
+### Process Targets
+
+Process targets are a "means of implementation."
+
+- 11.A **Planning**
+
+    Support positive economic, social and environmental links between urban, per-urban and rural areas by strengthening national and regional development planning 
+
+    - 11.A.1 Proportion of population living in cities that implement urban and regional development plans integrating population projections and resource needs, by size of city
+
+- 11.B **Policy**
+
+    By 2020, substantially increase the number of cities and human settlements adopting and implementing integrated policies and plans towards inclusion, resource efficiency, mitigation and adaptation to climate change, resilience to disasters, and develop and implement, in line with the Sendai Framework for Disaster Risk Reduction 2015-2030, holistic disaster risk management at all levels 
+
+    - 11.B.1 Proportion of local governments that adopt and implement local disaster risk reduction strategies in line with the Sendai Framework for Disaster Risk Reduction 2015-2030a
+
+    - 11.B.2 Number of countries with national and local disaster risk reduction strategiesa
+
+- 11.C **Financing**
+
+    Support least developed countries, including through financial and technical assistance, in building sustainable and resilient buildings utilizing local materials
+
+    - 11.C.1 Proportion of financial support to the least developed countries that is allocated to the construction and retrofitting of sustainable, resilient and resource-efficient buildings utilizing local materials
+
+### Indicators
+
+[Indicators and a Monitoring Framework for the Sustainable Development Goals .:. Sustainable Development Knowledge Platform](https://sustainabledevelopment.un.org/index.php?page=view&type=400&nr=2013&menu=35)
+
+Indicators will be the backbone of monitoring progress towards the SDGs at the local, national, regional,and global levels. A sound indicator framework will turn the SDGs and their targets into a management tool to help countries develop implementation strategies and allocate resources accordingly, as well as a report card to measure progress towards sustainable development and help ensure the accountability of all stakeholders for achieving the SDGs. 
+
+## Setup Goals
+
+```{r setup goals}
+library(tidyverse)
+library(ohicore) # devtools::install_github('ohi-science/ohicore')
+library(RColorBrewer)
+
+regions_csv  = 'layers/regions.csv'
+regions_json = 'data/regions.geojson'
+goals_csv    = 'config/goals.csv'
+
+if (!file.exists(goals_csv)){
+  
+  # setup goal labels
+  goal_labels = c('Housing','Transportation','Growth','Culture','Resilience','Environment','Green Space')
+  n_g = length(goal_labels)
+  
+  # define goals
+  data_frame(
+    label  = goal_labels,
+    weight = rep(100/n_g, n_g),
+    color = brewer.pal(n_g, 'Spectral')) %>%
+    write_csv(goals_csv)
+}
+```
+
+
+## Calculate Scores
+
+```{r calculate scores}
+goals   = read_csv(goals_csv)
+n_g = nrow(goals)
+
+regions = read_csv(regions_csv)
+regions = regions %>%  
+  bind_rows(
+    data_frame(
+      city       = 'Santa  Barbara County',
+      region_id  = 0,
+      area_acres = sum(regions$area_acres)))
+
+# fake scores
+# TODO: generate for all regions
+goal_scores  = runif(n_g) * 100
+
+# calculate overall index
+index = weighted.mean(goal_scores, goals$weight) %>% round()
+```
+
+## Plot Scores
+
+```{r plot scores, fig.height=6, fig.width=6}
+PlotFlower(
+  goal_scores, goals$weight, goals$label, center=round(index),
+  main = 'Santa Barbara County', fill.col = goals$color,
+  max.length = 100, disk=0.4, label.cex=0.9, label.offset=0.155, cex=2.2, cex.main=2.5)
+```

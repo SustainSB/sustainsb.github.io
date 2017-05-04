@@ -34,6 +34,7 @@ library(maptools)
 library(geojsonio)
 library(leaflet)
 
+regions_csv  = 'layers/regions.csv'
 regions_json = 'data/regions.geojson'
 cities_shp   = 'data/cosb.countyofsb.org/city_boundary_no_ocean.shp'
 county_shp   = 'data/cosb.countyofsb.org/county_bnd.shp'
@@ -66,7 +67,7 @@ if (!file.exists(regions_json)){
   regions@data$area_acres = gArea(regions, byid=T) * sqft_to_acres
   
   # write layer
-  write_csv(regions@data, 'layers/regions.csv')
+  write_csv(regions@data, regions_csv)
   
   # write regions to geosjon
   geojson_write(regions, file=regions_json, convert_wgs84=T)
