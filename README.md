@@ -24,11 +24,11 @@ The website is hosted for free on Github in a repository, a collection of versio
 
 A typical process for arriving at sustainability indices involves these steps:
 
-- [**prep_regions**](https://sustainsb.github.io/prep_regions.html). The regions make up the fundamental spatial units of analysis for associating data layers and goal scores.
+1. [**prep_regions**](https://sustainsb.github.io/prep_regions.html). The regions make up the fundamental spatial units of analysis for associating data layers and goal scores.
 
     ![](images/regions_cities.png)
 
-- [**prep_layers**](https://sustainsb.github.io/prep_layers.html). Any data layer should be attributed to the regions with explicit units (eg km<sup>2</sup>) and can represent measurements over time. Most raw data must be aggregated or split in space and time to match the spatial regions and comparable time increments (eg years), as is the case in this example of extracting a groundwater score from the many USGS stations and sampling dates.
+1. [**prep_layers**](https://sustainsb.github.io/prep_layers.html). Any data layer should be attributed to the regions with explicit units (eg km<sup>2</sup>) and can represent measurements over time. Most raw data must be aggregated or split in space and time to match the spatial regions and comparable time increments (eg years), as is the case in this example of extracting a groundwater score from the many USGS stations and sampling dates.
 
     - USGS groundwater stations:
     
@@ -42,7 +42,7 @@ A typical process for arriving at sustainability indices involves these steps:
     
         ![](images/layer_groundwater_score-map.png)
 
-- [**calc_scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an overall index score for the region. Finally, the region goals and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara.
+1. [**calc_scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an overall index score for the region. Finally, the region goals and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara.
 
     ![](images/scores_flower-plot_sbcounty.png)
 
@@ -56,9 +56,9 @@ For more on the specific stack of open-source software ([R](https://www.r-projec
 
 This software stack can operate across platforms (Windows, Mac, Linux) for free, which lowers the barriers to entry for other individuals to contribute to SustainSB or other cities to adopt the framework.
 
-It is especially useful to differentiate the life stages of data and applicable technology:
+It is especially useful to differentiate applicable technology to the various processes along the life stages of data:
 
-- **Curating Data Catalogs**
+1. **Curating Data Catalogs**
     
     - ESRI offers many data layers for consumption as web services via [arcgis.com](http://www.arcgis.com), which can be aggregated into data portals such as [LA GeoHub](http://geohub.lacity.org).
     
@@ -66,11 +66,11 @@ It is especially useful to differentiate the life stages of data and applicable 
     
     - Many free data portals, such as [data.gov](http://data.gov) and [data.ca.gov](https://data.ca.gov/), offer additional spatial data for consumption.
     
-- **Consuming Data**
+1. **Consuming Data**
     
     - Application programming interfaces (APIs), such as [OGC](https://en.wikipedia.org/wiki/Open_Geospatial_Consortium) spatial web services or the [USGS REST Web Services](https://waterservices.usgs.gov/rest/) used in the [prep_layers](https://sustainsb.github.io/prep_layers.html) example, enable automated consumption of data, whether using ESRI or open-source software.
 
-- **Calculating Scores**
+1. **Calculating Scores**
     
     - ESRI offers [Model Builder](http://pro.arcgis.com/en/pro-app/help/analysis/geoprocessing/modelbuilder/what-is-modelbuilder-.htm), a scientific workflow, for both desktop and online server software.
     
@@ -78,7 +78,7 @@ It is especially useful to differentiate the life stages of data and applicable 
     
     - Open-source data science programming languages such as [R](https://www.r-project.org/about.html) or [Python](https://www.python.org) offer the most flexibility for consuming data and creating arbitrary calculations.
 
-- **Presenting Results**
+1. **Presenting Results**
 
     - A website can be published for free using [Github Pages](https://pages.github.com).
         
@@ -88,7 +88,7 @@ It is especially useful to differentiate the life stages of data and applicable 
         
     - The interactive mapping readily available with open-source software (eg [leaflet](rstudio.github.io/leaflet)) can show spatial data, but lacks the polish and responsiveness of the ESRI products.
 
-- **Gathering Feedback**
+1. **Gathering Feedback**
 
     - Similar to [SeaSketch](http://seasketch.org/), the CBI [DataBasin](https://databasin.org) platform offers spatial [commenting](https://databasin.org/help), allowing you to participate in a thread of conversation and associate comments with spatially drawn features (eg point, line or polygon) and map (with specific layers turned on and extent captured).
     
