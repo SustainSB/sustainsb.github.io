@@ -42,7 +42,7 @@ A typical process for arriving at sustainability indices involves these steps:
     
         ![](images/layer_groundwater_score-map.png)
 
-1. [**calc_scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an index score of the individual regions. Finally, the goals and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara County.
+1. [**calc_scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an index score of the individual regions. Finally, the goal and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara County.
 
     ![](images/scores_flower-plot_sbcounty.png)
 
