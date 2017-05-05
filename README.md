@@ -38,7 +38,7 @@ A typical process for arriving at sustainability indices involves these steps:
     
         ![](images/layer_groundwater_score-timeseries.png)
 
-    - Groundwater score summarized over regions and as a map of current year (2017):
+    - Groundwater score of current year (2017) as a map :
     
         ![](images/layer_groundwater_score-map.png)
 
