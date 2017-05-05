@@ -155,7 +155,7 @@ gw_w = gw %>%
 gw_w %>%
   select(-year) %>%
   as.xts(., order.by=ymd(sprintf('%d-01-01', gw_w$year))) %>%
-  dygraph(main = "Deaths from Lung Disease (UK)") %>%
+  dygraph(main = "Groundwater Score") %>%
   dyOptions(
     strokeWidth = 2,
     colors = RColorBrewer::brewer.pal(ncol(gw_w)-1, 'Spectral'))
