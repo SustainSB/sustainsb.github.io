@@ -7,11 +7,17 @@ This proof of concept SustainSB.github.io site demonstrates an open-source appro
 ## **Ocean Health Index** (OHI) Framework
 
 - public website: [OceanHealthIndex.org](http://www.oceanhealthindex.org/)
+
 - science website: [OHI-science.org](http://ohi-science.org/)
+
 - presentation: [Reproducible Science with the Ocean Health Index](http://benbestphd.com/talks/2014-06_OHI-repro-sci) (2014)
-    - Example Gulf of Guayaqil [website](http://ohi-science.org/gye) & [files](https://github.com/ohi-science/gye)
+
+- example: Gulf of Guayaqil [website](http://ohi-science.org/gye) & [files](https://github.com/ohi-science/gye) (2015)
+
     ![](images/ohi-gye_menu.png)
+
 - app: [Global OHI Explorer App](http://ecoquants.com/app/ohi) (2016)
+
 - presentation: [Transforming how we approaching marine science for management](https://docs.google.com/presentation/d/1MW36Q3YO7ovL5RrhyMTzMtzA0oN4dJukpAsInsuC6Qs/edit#slide=id.g1dc9c1836e_0_81) (2017)
 
 ## Demo for **SustainSB**
