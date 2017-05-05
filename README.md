@@ -48,7 +48,9 @@ A typical process for arriving at sustainability indices involves these steps:
 
 ## Technology
 
-The open-source approach demonstrated here is interoperable with other technologies such as [ESRI](http://www.esri.com/) commercial software (desktop, server and web services). For more on the specific stack of open-source software ([R](https://www.r-project.org/about.html) programming language, [RStudio](https://www.rstudio.com/products/rstudio/) integrated development environment, [Git](https://git-scm.com/) versioning program, and [GitHub](https://github.com/) collaborative development portal), please see the [OHI Manual](http://ohi-science.org/manual/#appendix-1-toolbox-software):
+The open-source approach demonstrated here is interoperable with other technologies such as [ESRI](http://www.esri.com/) commercial software (desktop, server and web services) that SustainSB technology lead Mike Wald of [Oniracom](https://oniracom.com) is exploring.
+
+For more on the specific stack of open-source software ([R](https://www.r-project.org/about.html) programming language, [RStudio](https://www.rstudio.com/products/rstudio/) integrated development environment, [Git](https://git-scm.com/) versioning program, and [GitHub](https://github.com/) collaborative development portal), please see the [OHI Manual](http://ohi-science.org/manual/#appendix-1-toolbox-software):
 
   ![](images/ohi-manual-tools.png)
 
