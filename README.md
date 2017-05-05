@@ -86,6 +86,12 @@ It is especially useful to differentiate the life stages of data and applicable 
         
     - The interactive mapping readily available with open-source software (eg [leaflet](rstudio.github.io/leaflet)) can show spatial data, but lacks the polish and responsiveness of the ESRI products.
 
+- **Gathering Feedback**
+
+    - Similar to [SeaSketch](http://seasketch.org/), the CBI [DataBasin](https://databasin.org) platform offers spatial [commenting](https://databasin.org/help), allowing you to participate in a thread of conversation and associate comments with spatially drawn features (eg point, line or polygon) and map (with specific layers turned on and extent captured).
+    
+    - [Google Forms](https://www.google.com/forms/about/) are free and easy for non-spatial feedback.
+
 ## Contact
 
 Please feel free to direct questions or suggestions about this repo to Ben Best (<ben@ecoquants.com>).
