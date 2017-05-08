@@ -30,11 +30,11 @@ The website is hosted for free on Github in a repository, a collection of versio
 
 A typical process for arriving at sustainability indices involves these steps:
 
-1. [**Prep Regions**](https://sustainsb.github.io/prep_regions.html). The regions make up the fundamental spatial units of analysis for associating data layers and goal scores.
+1. [**Prep Regions**](https://sustainsb.github.io/prep_regions.html). The regions make up the fundamental spatial units of analysis for associating data layers and goal scores. Here's one possibility: "regions" are the city boundaries, and the are "Outside Cities" makes up the rest of Santa Barbara County.
 
     ![](images/regions_cities.png)
 
-1. [**Prep Layers**](https://sustainsb.github.io/prep_layers.html). Any data layer should be attributed to the regions with explicit units (eg km<sup>2</sup>) and can represent measurements over time. Most raw data must be aggregated or split in space and time to match the spatial regions and comparable time increments (eg years), as is the case in this example of extracting a groundwater score from the many USGS stations and sampling dates.
+1. [**Prep Layers**](https://sustainsb.github.io/prep_layers.html). Any data layer should be attributed to the regions with explicit units when possible (eg km<sup>2</sup>) and can represent measurements over time. Most raw data must be aggregated or split in space and time to match the spatial regions and comparable time increments (eg years), as is the case in this example of extracting a groundwater score from the many USGS stations and sampling dates.
 
     - USGS groundwater stations:
     
@@ -48,7 +48,7 @@ A typical process for arriving at sustainability indices involves these steps:
     
         ![](images/layer_groundwater_score-map.png)
 
-1. [**Calculate Scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an index score of the individual regions. Finally, the goal and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara County.
+1. [**Calculate Scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an index score of the individual regions. Finally, the goal and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara County. Here's a mockup of goals based on the UN SDG11 targets and fake data.
 
     ![](images/scores_flower-plot_sbcounty.png)
 
@@ -102,4 +102,4 @@ It is especially useful to differentiate applicable technology to the various pr
 
 ## Contact
 
-Please feel free to direct questions or suggestions about this repo to Ben Best (<ben@ecoquants.com>).
+Please feel free to direct questions or suggestions about this repo to Ben Best (<ben@ecoquants.com>), who can also add you as a member to the SustainSB Github group ([github.com/sustainsb](https://github.com/SustainSB)) given your Github login (easy to register at [github.com](https://github.com)).
