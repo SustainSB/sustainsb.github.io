@@ -23,3 +23,10 @@ before_script:
 script:
   - ./_render.sh
   - ./_push.sh
+  
+notifications:
+  email:
+    recipients:
+    - ben@ecoquants.com
+    on_success: change
+    on_failure: always
