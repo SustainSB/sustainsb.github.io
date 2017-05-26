@@ -9,17 +9,13 @@ branches:
   only:
   - master
 
-pandoc_version: 1.16
-apt_packages:
-  - libxml2-dev
-repos:
-  CRAN: https://cloud.r-project.org
-  ropensci: http://packages.ropensci.org
+#pandoc_version: 1.16
+#apt_packages:
+#  - libxml2-dev
+#repos:
+#  CRAN: https://cloud.r-project.org
+#  ropensci: http://packages.ropensci.org
   
-script:
-- R CMD build .
-- R CMD check *tar.gz
-
 before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
