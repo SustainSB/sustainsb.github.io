@@ -7,4 +7,5 @@ Depends: R (>= 3.3.2)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: tidyverse,rmarkdown,tidyverse,sp,geojsonio,dataRetrieval,lubridate,stringr,scales,dygraphs,xts,DT,leaflet,htmltools,RColorBrewer,geojsonio
+X-CRAN-Comment: Imports: tidyverse,rmarkdown,tidyverse,sp,geojsonio,dataRetrieval,lubridate,stringr,scales,dygraphs,xts,DT,leaflet,htmltools,RColorBrewer,geojsonio
+Imports: rmarkdown
