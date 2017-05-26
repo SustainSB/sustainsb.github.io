@@ -11,9 +11,9 @@ setup_git() {
 }
 
 commit_website_files() {
-  git checkout ${GH_BRANCH}
-  git add . *.html
-  git commit --message "Travis render & push [skip ci]: $TRAVIS_BUILD_NUMBER"
+  #git checkout ${GH_BRANCH}
+  git add --all
+  git commit -am "Travis render & push [skip ci]: $TRAVIS_BUILD_NUMBER"
 }
 
 upload_files() {
