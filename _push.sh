@@ -11,7 +11,7 @@ setup_git() {
 }
 
 commit_website_files() {
-  git checkout -b ${GH_BRANCH}
+  git checkout ${GH_BRANCH}
   git add . *.html
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }

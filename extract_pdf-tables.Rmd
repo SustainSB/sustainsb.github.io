@@ -1,0 +1,65 @@
+---
+title: "extract_pdf_table"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+**tabulizer** provides R bindings to the Tabula java library, which can be used to computationaly extract tables from PDF documents.
+
+- [tabulizer tutorial](https://ropensci.org/tutorials/tabulizer_tutorial.html)
+- [Extracting Tables from PDFs in R using the Tabulizer Package | R-bloggers](https://www.r-bloggers.com/extracting-tables-from-pdfs-in-r-using-the-tabulizer-package/)
+- [Introducing pdftools - A fast and portable PDF extractor](https://ropensci.org/blog/2016/03/01/pdftools-and-jeroen)
+
+```{r eval=F}
+if(!require("ghit")){
+    install.packages("ghit")
+}
+
+ghit::install_github(c("ropenscilabs/tabulizerjars", "ropenscilabs/tabulizer"))
+```
+
+
+```{r cars}
+library(tabulizer)
+library(dplyr)
+
+# Location of WARN notice pdf file
+pdf = '~/Dropbox/Zotero_storage/5VEVG77A/Berardi - 2013 - Sustainability assessment of urban communities through rating systems.pdf'
+
+# Extract the table
+out <- extract_tables(pdf)
+```
+
+Got error:
+
+```
+Error in .jcall("RJavaTools", "Ljava/lang/Object;", "invokeMethod", cl,  : 
+  java.lang.NoSuchMethodError: java.lang.Integer.compare(II)I
+```
+
+- [extract_tables() error: java.lang.NoSuchMethodError · Issue #42 · ropensci/tabulizer](https://github.com/ropensci/tabulizer/issues/42#issuecomment-294123978)
+- [How do I Update Java for my Mac?](https://www.java.com/en/download/help/mac_java_update.xml)
+
+TODO...:
+- [osx - Installed Java 7 on Mac OS X but Terminal is still using version 6 - Stack Overflow](http://stackoverflow.com/questions/12757558/installed-java-7-on-mac-os-x-but-terminal-is-still-using-version-6#answer-33571909)
+- [osx - Operation Not Permitted when on root El capitan (rootless disabled) - Stack Overflow](http://stackoverflow.com/questions/32659348/operation-not-permitted-when-on-root-el-capitan-rootless-disabled#answer-32661637)
+
+```bash
+sudo ln -s -f "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java" /usr/bin/java
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
