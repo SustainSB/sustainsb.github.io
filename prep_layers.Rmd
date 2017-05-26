@@ -9,10 +9,6 @@ output:
     code_folding: hide
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Download Data
 
 Download groundwater data from USGS using:
@@ -35,6 +31,10 @@ library(dygraphs)
 library(xts)
 library(DT)
 library(leaflet)
+library(htmltools)
+library(RColorBrewer)
+library(geojsonio)
+
 
 regions_json = 'data/regions.geojson'
 gw_data_csv  = 'data/waterservices.usgs.gov/usgs_groundwater_data.csv'
@@ -158,7 +158,7 @@ gw_w %>%
   dygraph(main = "Groundwater Score") %>%
   dyOptions(
     strokeWidth = 2,
-    colors = RColorBrewer::brewer.pal(ncol(gw_w)-1, 'Spectral'))
+    colors = brewer.pal(ncol(gw_w)-1, 'Spectral'))
 ```
 
 ## Plot Map of Current Groundwater Scores
@@ -178,7 +178,8 @@ pal = colorNumeric('Spectral', regions$gw_score, reverse=F)
 labels <- sprintf(
   "<strong>%s</strong><br/>groundwater score: %g",
   regions$city, regions$gw_score) %>% 
-  lapply(htmltools::HTML)
+  lapply(HTML)
+
 
 # show interactive map
 leaflet(regions) %>%
