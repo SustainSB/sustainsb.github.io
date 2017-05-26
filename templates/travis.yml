@@ -4,6 +4,11 @@ language: R
 sudo: false
 cache: packages
 
+# safelist
+branches:
+  only:
+  - master
+
 pandoc_version: 1.16
 apt_packages:
   - libxml2-dev

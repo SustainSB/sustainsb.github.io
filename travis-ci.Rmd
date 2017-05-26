@@ -1,0 +1,20 @@
+---
+title: "Auto-Update Daily with Travis Continuous Integration (CI)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Travis
+
+```{r}
+library(tidyverse)
+
+repo = 'sustainsb'
+
+whisker::whisker.render(readLines('templates/travis.yml'), ) %>%
+  writeLines('.travis.yml')
+```
+
