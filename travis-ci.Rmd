@@ -18,5 +18,5 @@ whisker::whisker.render(readLines('templates/travis.yml'), ) %>%
 
 
 ```bash
-cat ~/.gh-token_sustainsb-push | travis encrypt --add
+echo GH_TOKEN=`cat ~/.gh-token_sustainsb-push` | travis encrypt --add
 ```

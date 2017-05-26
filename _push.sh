@@ -2,7 +2,6 @@
 
 export GH_USER=sustainsb
 export GH_REPO=sustainsb.github.io
-export GH_BRANCH=master
 
 setup_git() {
   git config --global user.email "travis@travis-ci.org"
@@ -10,14 +9,13 @@ setup_git() {
 }
 
 commit_website_files() {
-  git checkout -b ${GH_BRANCH}
   git add . *.html
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
 upload_files() {
-  git remote add origin-pages https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git > /dev/null 2>&1
-  git push --quiet --set-upstream origin ${GH_BRANCH}
+  git remote add origin-up https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git > /dev/null 2>&1
+  git push --quiet --set-upstream origin-up
 }
 
 setup_git
