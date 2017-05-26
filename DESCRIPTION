@@ -1,0 +1,9 @@
+Package: sustainsb.github.io
+Title: SustainSB: Sustainability for Santa Barbara
+Version: 0.0.0.9000
+Authors@R: person("Ben", "Best", email = "ben@ecoquants.com", role = c("aut", "cre"))
+Description: Scientific data-driven website and calculation repo for [SustainSB.org](http://sustainsb.org)
+Depends: R (>= 3.3.2)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
