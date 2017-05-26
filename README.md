@@ -1,3 +1,5 @@
+[![](https://api.travis-ci.org/sustainsb/sustainsb.github.io.svg?branch=draft)](https://travis-ci.org/sustainsb/sustainsb.github.io)
+
 # sustainsb.github.io
 
 Scientific data-driven website and calculation repo for [SustainSB.org](http://sustainsb.org)
