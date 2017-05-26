@@ -12,9 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(tidyverse)
 
-repo = 'sustainsb'
-
 whisker::whisker.render(readLines('templates/travis.yml'), ) %>%
   writeLines('.travis.yml')
 ```
 
+
+```bash
+cat ~/.gh-token_sustainsb-push | travis encrypt --add
+```

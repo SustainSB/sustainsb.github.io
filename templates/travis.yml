@@ -17,9 +17,9 @@ branches:
 #  ropensci: http://packages.ropensci.org
   
 before_script:
-  - chmod +x ./_build.sh
-  - chmod +x ./_deploy.sh
+  - chmod +x ./_render.sh
+  - chmod +x ./_push.sh
 
 script:
-  - ./_build.sh
-  - ./_deploy.sh
+  - ./_render.sh
+  - ./_push.sh
