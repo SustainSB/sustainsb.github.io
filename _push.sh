@@ -5,8 +5,8 @@ export GH_REPO=sustainsb.github.io
 export GH_BRANCH=master
 
 setup_git() {
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "Travis CI"
+  git config --global user.email "ben@ecoquants.com"
+  git config --global user.name "Ben Best"
   git config --global push.default matching
 }
 
