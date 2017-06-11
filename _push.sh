@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export GH_USER=sustainsb
+export GH_USER=SustainSB
 export GH_REPO=sustainsb.github.io
 export GH_BRANCH=master
 
