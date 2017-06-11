@@ -17,10 +17,7 @@ commit_website_files() {
 }
 
 upload_files() {
-  echo git remote add origin-token https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git
-  git remote add origin-token https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git
-  #git push --quiet --set-upstream origin-up
-  git push --set-upstream origin-token ${GH_BRANCH}
+  git push https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git ${GH_BRANCH}
 }
 
 setup_git
