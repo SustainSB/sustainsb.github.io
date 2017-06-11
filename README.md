@@ -1,4 +1,4 @@
-[![](https://api.travis-ci.org/sustainsb/sustainsb.github.io.svg?branch=draft)](https://travis-ci.org/sustainsb/sustainsb.github.io)
+[![](https://api.travis-ci.org/sustainsb/sustainsb.github.io.svg?branch=master)](https://travis-ci.org/sustainsb/sustainsb.github.io)
 
 # sustainsb.github.io
 
