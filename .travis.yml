@@ -1,8 +1,13 @@
-language: R
+# https://docs.travis-ci.com/user/languages/r/
+language: r
+cache: packages
 sudo: false
 branches:
   only:
   - master
+repos:
+  CRAN: https://cloud.r-project.org
+  ropensci: http://packages.ropensci.org  
 before_script:
 - chmod +x ./_render.sh
 - chmod +x ./_push.sh
