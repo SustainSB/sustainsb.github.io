@@ -13,7 +13,7 @@ git config --global push.default matching
 # git commit
 git checkout ${GH_BRANCH}
 git add --all
-git commit -am "Travis $TRAVIS_EVENT_TYPE push [skip ci]: build $TRAVIS_BUILD_NUMBER"
+git commit -am "Travis $TRAVIS_EVENT_TYPE [skip ci]: build $TRAVIS_BUILD_NUMBER"
 
 # git push
 git remote add upstream "https://${GH_TOKEN}@github.com/${GH_OWNER}/${GH_REPO}.git"
