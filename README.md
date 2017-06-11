@@ -94,7 +94,7 @@ It is especially useful to differentiate applicable technology to the various pr
         
         - This web hosting can also apply to a registered for a domain. For instance sustainsb.github.io could be sustainsb.org and based on files at github.com/sustainsb/sustainsb.github.io, similar to how ohi-science.github.io redirects to ohi-science.org that isbased on files at github.com/ohi-science/ohi-science.github.io.
         
-        - This free web hosting is only availble for static web files (html, js, css, ...) and not for server-side processing such as a WordPress site. The user experience can still be interactive, using Javascript, and site pre-processed with templates (eg using [blogdown](https://bookdown.org/yihui/blogdown/)).
+        - This free web hosting is only available for static web files (html, js, css, ...) and not for server-side processing such as a WordPress site. The user experience can still be interactive, using Javascript, and site pre-processed with templates (eg using [blogdown](https://bookdown.org/yihui/blogdown/)).
         
     - The interactive mapping readily available with open-source software (eg [leaflet](rstudio.github.io/leaflet)) can show spatial data, but lacks the polish and responsiveness of the ESRI products.
 
