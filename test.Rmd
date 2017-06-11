@@ -1,6 +1,6 @@
 ---
 title: "test"
-date: `r Sys.time()`
+date: "`r Sys.time()`"
 output: html_document
 ---
 
