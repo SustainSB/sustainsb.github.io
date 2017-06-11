@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# info: https://github.com/SustainSB/sustainsb.github.io/issues/2
 export GH_OWNER=SustainSB
 export GH_REPO=sustainsb.github.io
 export GH_BRANCH=master
