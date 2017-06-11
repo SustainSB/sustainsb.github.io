@@ -10,8 +10,10 @@ git config --global user.name "Ben Best"
 git config --global push.default matching
 
 # git commit
+git checkout ${GH_BRANCH}
 git add --all
-git commit -am "Travis render & push [skip ci]: $TRAVIS_BUILD_NUMBER"
+git commit -am "Travis push [skip ci]: build $TRAVIS_BUILD_NUMBER"
 
 # git push
-git push https://${GH_TOKEN}@github.com/${GH_USER}/${GH_REPO}.git HEAD:${GH_BRANCH}
+git remote add upstream "https://${GH_TOKEN}@github.com/${GH_OWNER}/${GH_REPO}.git"
+git push -q upstream ${GH_BRANCH}
