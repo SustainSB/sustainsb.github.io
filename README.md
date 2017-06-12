@@ -8,6 +8,8 @@ This proof of concept SustainSB.github.io site demonstrates an open-source appro
 
 ## **Ocean Health Index** (OHI) Framework
 
+The **Ocean Health Index** (OHI) calculates the sustainable use of our oceans now and into the future according to a set of goals communicated visually as a flower plot and averaged into a single number for ease of comparison between regions and across years. Led by Dr. Ben Halpern at UCSB's [NCEAS](https://www.nceas.ucsb.edu), it provides a reductionist framework for potential use by SustainSB. The same open-source data science tools used by OHI are applied to this demonstration of SustainSB.
+
 - public website: [OceanHealthIndex.org](http://www.oceanhealthindex.org/)
 
 - science website: [OHI-science.org](http://ohi-science.org/)
@@ -51,6 +53,10 @@ A typical process for arriving at sustainability indices involves these steps:
         ![](images/layer_groundwater_score-map.png)
     
     Fetching the latest data from the [USGS REST Web Services](https://waterservices.usgs.gov/rest/) or other similar web services for various data layers is possible at monthly/weekly/daily frequencies, along with recalculation of SustainSB goal and index scores for free! (The geek speak of how this is possible is using a [cron job](https://docs.travis-ci.com/user/cron-jobs/) to [continuously integrate](https://en.wikipedia.org/wiki/Continuous_integration) on a Github repository using [Travis CI](https://docs.travis-ci.com/user/for-beginners) service that spins up a server to check code and can be appropriated to fetch data, prep layers, calculate scores and update the website.)
+    
+    UPDATE 2017-06-11: This free daily calculation infrastructure has now been setup for SustainSB (eg see [travis-ci.org/SustainSB/sustainsb.github.io](https://travis-ci.org/SustainSB/sustainsb.github.io) and [issue #2](https://github.com/SustainSB/sustainsb.github.io/issues/2) for details). Note the badge at the top of this README which describes the build status. Now you can see the Travis builds resulting from either regular `push` (from git commit and push operations) or `cron` (daily execution of code without need for git commit and push) events in the [SustainSB/sustainsb.github.io commit log](https://github.com/SustainSB/sustainsb.github.io/commits/master):
+    
+    ![](https://user-images.githubusercontent.com/2837257/27041240-42f20a86-4f48-11e7-8558-e836d75a79ce.png)
 
 1. [**Calculate Scores**](https://sustainsb.github.io/calc_scores.html). Data layers are blended with an equation to arrive at a goal score, possibly involving dimensions (eg status, trend, pressures, resilience). The goal scores then get averaged for an index score of the individual regions. Finally, the goal and index scores for all regions are averaged with a weighting (eg population or area) to arrive at scores for the entire study area of Santa Barbara County. Here's a mockup of goals based on the UN SDG11 targets and fake data.
 
