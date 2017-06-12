@@ -4,7 +4,7 @@
 
 Scientific data-driven website and calculation repo for [SustainSB.org](http://sustainsb.org)
 
-This proof of concept SustainSB.github.io site demonstrates an open-source approach to calculating sustainability indices for Santa Barbara, setup initially by [Ben Best](http://ecoquants.com/about/#people) for a [SustainSB.org](http://sustainsb.org) meeting May 4, 2017 organized by Seth Streeter, Laura Capps and Dave Fortsen. We hope to create a digital dashboard for sustainability in Santa Barbara that will become a model for cities around the world that aligns with the United Nations Sustainable Development Goal [**11: Sustainable Cities and Communities**](https://sustainabledevelopment.un.org/sdg11#targets).
+This proof of concept SustainSB.github.io site demonstrates an open-source approach to calculating sustainability indices for Santa Barbara, setup initially by [Ben Best of EcoQuants](http://ecoquants.com/about/#people) for a [SustainSB.org](http://sustainsb.org) meeting May 4, 2017 organized by Seth Streeter, Laura Capps and Dave Fortsen. We hope to create a digital dashboard for sustainability in Santa Barbara that will become a model for cities around the world that aligns with the United Nations Sustainable Development Goal [**11: Sustainable Cities and Communities**](https://sustainabledevelopment.un.org/sdg11#targets).
 
 ## **Ocean Health Index** (OHI) Framework
 
