@@ -11,6 +11,10 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+
+library(tidyverse)
+library(ohicore) # devtools::install_github('ohi-science/ohicore')
+library(RColorBrewer)
 ```
 
 ## SDG11 Targets

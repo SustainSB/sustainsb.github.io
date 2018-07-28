@@ -1,0 +1,21 @@
+---
+title: "test"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r cars}
+packages <- c(
+  "tidyverse", "lubridate", "stringr", "scales", 
+  "dataRetrieval", 
+  "sp", "geojsonio", "leaflet", 
+  "dygraphs", "xts", 
+  "DT", "htmltools", "RColorBrewer")
+for (p in packages){
+  devtools::use_package(p)
+}
+```

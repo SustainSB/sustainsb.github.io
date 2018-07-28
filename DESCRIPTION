@@ -8,4 +8,17 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 X-CRAN-Comment: Imports: tidyverse,rmarkdown,tidyverse,sp,geojsonio,dataRetrieval,lubridate,stringr,scales,dygraphs,xts,DT,leaflet,htmltools,RColorBrewer,geojsonio
-Imports: rmarkdown
+Imports: rmarkdown,
+    tidyverse,
+    lubridate,
+    stringr,
+    scales,
+    dataRetrieval,
+    sp,
+    geojsonio,
+    leaflet,
+    dygraphs,
+    xts,
+    DT,
+    htmltools,
+    RColorBrewer

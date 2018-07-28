@@ -19,7 +19,7 @@ Download groundwater data from USGS using:
 knitr::opts_chunk$set(echo = TRUE, message = F, warning=F)
 ```
 
-```{r download}
+```{r download, results="hide"}
 library(tidyverse)
 library(sp)
 library(geojsonio)
@@ -35,12 +35,11 @@ library(htmltools)
 library(RColorBrewer)
 library(geojsonio)
 
-
 regions_json = 'data/regions.geojson'
 gw_data_csv  = 'data/waterservices.usgs.gov/usgs_groundwater_data.csv'
 gw_layer_csv = 'layers/groundwater_scores.csv'
 
-if (!file.exists(gw_data_csv)){
+#if (!file.exists(gw_data_csv)){
   # read regions from geojson file
   regions = geojson_read(regions_json, what='sp')
   
@@ -60,7 +59,7 @@ if (!file.exists(gw_data_csv)){
   pts@data = pts@data %>%
     cbind(site_rgn)
   pts = subset(pts, !is.na(region_id))
-  geojson_write(pts, file='data/usgs_stations.geojson')
+  geojson_write(pts, file='data/usgs_stations.geojson', overwrite=T, verbose=F)
   
   # join overlapping region to sites
   sites = sites %>%
@@ -75,7 +74,7 @@ if (!file.exists(gw_data_csv)){
   for (i in 1:(length(i_seq)-1)){ # i=2
     i_beg = i_seq[i]
     i_end = i_seq[i+1]-1
-    cat(sprintf('%02d: %d - %d\n', i, i_beg, i_end))
+    #cat(sprintf('%02d: %d - %d\n', i, i_beg, i_end))
     d_i = readNWISgwl(sites$site_no[i_beg:i_end], convertType=F)
     if (i == 1){
       d = d_i
@@ -95,8 +94,10 @@ if (!file.exists(gw_data_csv)){
       sites, by=c('site_no','agency_cd','site_tp_cd')) %>%
     filter(!is.na(lev_va)) %>%  # 170,730 rows of data: region_id, site_no, year, lev_dt, lev_va
     write_csv(gw_data_csv)      # 24.3 MB
-}
+#}
+```
 
+```{r}
 # read in groundwater data and look at first 100 rows
 gw_data = read_csv(gw_data_csv)
 gw_data %>%
@@ -113,7 +114,7 @@ The rows above are just the first `100` rows from all the station data having `r
 
 ```{r}
 
-if (!file.exists(gw_layer_csv)){
+#if (!file.exists(gw_layer_csv)){
 
   # read in data
   d = read_csv(gw_data_csv) %>%
@@ -137,7 +138,7 @@ if (!file.exists(gw_layer_csv)){
       gw_score = mean(gw_score))        # average score across sites
   
   write_csv(d, gw_layer_csv)
-}
+#}
 
 read_csv(gw_layer_csv) %>%
   datatable()
