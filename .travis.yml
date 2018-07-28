@@ -21,6 +21,7 @@ addons:
     packages:
       # protolite
       - libprotobuf-dev
+      - protobuf-compiler
       # rgdal
       - libgdal-dev
       # units for sf
