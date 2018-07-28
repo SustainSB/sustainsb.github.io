@@ -7,9 +7,26 @@ sudo: false
 branches:
   only:
   - master
+sudo: required
 repos:
   CRAN: https://cloud.r-project.org
   ropensci: http://packages.ropensci.org  
+before_install:
+  # jqr
+  - sudo add-apt-repository -y ppa:opencpu/jq
+  - sudo apt-get update -q
+  - sudo apt-get install libjq-dev
+addons:
+  apt:
+    packages:
+      # protolite
+      - libprotobuf-dev
+      # rgdal
+      - libgdal-dev
+      # units for sf
+      - libudunits2-dev
+      # V8
+      - libv8-3.14-dev
 before_script:
 - chmod +x ./_render.sh
 - chmod +x ./_push.sh
@@ -17,3 +34,7 @@ script: ./_render.sh && ./_push.sh
 env:
   global:
     secure: JB2KGhBPPfpfv4DTbugOHIEJ2GbSZGodVBk+B9EH4HzNioC6sZuRTs/TSC57pmRVaxBjhojIxJwz5tBnYAj8Od4qOTsFwZp2KJn15pKXTwX+597P9V0mQvdtkkkcJnn0W4tmp1Ou7cL0clY0FV2UwRSdTRWMMS7BeR9TNV7nGWrCBgq6xglJf6yJCpksJlrydmJFskazhbNFjGK9uikeVmmjAmJjOQwwxTgqmJj/x+Oe4f60wcIeTzn3NdPqYJyDZcI3js+7gQ2bvmd9s1kpOtFh3YMT/3lEtYvulRfnQ2OOp55BrigFG1EHCGdfgypu7nTATB5ieCO6/BXK8OVdqp9XldI0NponkTMFovxV4/DqVOYakuXFvWj/1p9vUrDe3f+YVvNh7ZHn/CIIND0ZLqcshQY9JaBd5rDA+MyMWtPot7+WOteFkBgb9Mtzlqr5mEgwQWTfIWfZno1GPUGcrSy6BXh3/eqwXQmdOBb/iOF2XrUrvlWrSIE1t5m61WS57J3ztkjEaY4ftxeK+q6nFtBaMiuZCaA17dbXoC3YWnVPh0fY3/fGB1ghZyzr+g97Q3yJ3ujZ65uz96LLtQt4ccIZ8N2QG9R5vvwstrIUbtLuzo6PxjFgtRo/BUC1bBLkexgcTY8WMmB3atrzXQ7VAEoycXonn+nKdTNM1h2xk2k=
+
+
+
+
